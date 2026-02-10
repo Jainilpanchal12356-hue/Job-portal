@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company portal</title>
+    <style>
+        body{
+            margin: 0%;
+            background-color: white;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        /*HEADER*/
+        header{
+            background-color: black;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        header input{
+            width: 60%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* JOB LIST */
+.jobs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+.job-card{
+    background:white;
+    padding:15px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.job-card h3{
+    margin:0;
+}
+
+.job-card button{
+    margin-top:10px;
+    padding:8px 12px;
+    border:none;
+    background:#b300b0;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.job-card button:hover{
+    background:#b300b0;
+}
+
+        /*APPLY FORM*/
+        .form-box{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+}
+
+.form-content{
+    background:white;
+    width:300px;
+    padding:20px;
+    margin:100px auto;
+    border-radius:8px;
+}
+
+.form-content input{
+    width:100%;
+    padding:8px;
+    margin:8px 0;
+}
+
+.form-content button{
+    width:100%;
+    padding:8px;
+    background:rgb(0, 111, 128);
+    color:white;
+    border:none;
+}
+   </style>
+           </head>
+           <body>
+            <header>
+    <h1>Job Portal</h1>
+    <input type="text" id="search" placeholder="Search job...">
+</header>
+
+<section class="jobs" id="jobList"></section>
+
+<!-- APPLY FORM -->
+<div class="form-box" id="applyForm">
+    <div class="form-content">
+        <h3>Apply Job</h3>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Email" required>
+        <button onclick="submitForm()">Submit</button>
+    </div>
+</div>
+
+<script>
+const jobs = [
+    {title:"Frontend Developer", company:"Google", location:"Remote"},
+    {title:"Backend Developer", company:"Amazon", location:"Bangalore"},
+    {title:"Web Developer", company:"Startup", location:"Ahmedabad"},
+    {title:"UI Designer", company:"Microsoft", location:"Hyderabad"}
+];
+
+const jobList = document.getElementById("jobList");
+const search = document.getElementById("search");
+const form = document.getElementById("applyForm");
+
+function showJobs(list){
+    jobList.innerHTML="";
+    list.forEach(job=>{
+        const div=document.createElement("div");
+        div.className="job-card";
+        div.innerHTML=`
+            <h3>${job.title}</h3>
+            <p><b>Company:</b> ${job.company}</p>
+            <p><b>Location:</b> ${job.location}</p>
+            <button onclick="openForm()">Apply</button>
+        `;
+        jobList.appendChild(div);
+    });
+}
+
+showJobs(jobs);
+
+search.addEventListener("keyup",()=>{
+    const value=search.value.toLowerCase();
+    const filtered=jobs.filter(job =>
+        job.title.toLowerCase().includes(value)
+    );
+    showJobs(filtered);
+});
+
+function openForm(){
+    form.style.display="block";
+}
+
+function submitForm(){
+    alert("Application Submitted Successfully!");
+    form.style.display="none";
+}
+</script>
+
+</body>
+</html>
